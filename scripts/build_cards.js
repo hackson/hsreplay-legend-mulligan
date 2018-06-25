@@ -4,7 +4,7 @@ const https = require('follow-redirects').https;
 const HEARTHSTONE_CARDS_JSON_URL =
     'https://api.hearthstonejson.com/v1/latest/enUS/cards.json';
 
-const CARDS_JSON_PATH = '../cards/cards.json';
+const CARDS_JSON_PATH = '../data/cards.json';
 
 const WHITELISTED_ATTRIBUTES = {
   'id': 1,
