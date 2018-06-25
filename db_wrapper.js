@@ -27,7 +27,7 @@ class DbWrapper {
     const mulliganRecord = this.createMulliganRecord_(
         game, replay, startingCards, mulliganCards);
     this.connection_.query(
-        'INSERT INTO mulligan SET ?',
+        'INSERT IGNORE INTO mulligan SET ?',
         mulliganRecord,
         (error, results) => {
           if (error) {

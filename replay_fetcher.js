@@ -22,12 +22,27 @@ class ReplayFetcher {
   filterReplaysAndProcess_(replays) {
     // Drop if rank requirement doesn't match.
     this.filterLowRankReplays_(replays);
+    // Drop duplicated replays (e.g. both people submitted).
+    this.filterDuplicatedReplays_(replays);
     // Drop if replay is stored already.
     this.filterStoredReplaysAndProcess_(replays);
   }
 
   filterLowRankReplays_(replays) {
     this.genericFiltering_(replays, util.isLowRankReplay);
+  }
+
+  filterDuplicatedReplays_(replays) {
+    const seenReplayIds = {};
+    for (let i = replays.length - 1; i >= 0; --i) {
+      const replay = replays[i];
+      const replayId = replay[constants.REPLAY_ID_FIELD];
+      if (seenReplayIds[replayId]) {
+        console.log(`Found duplicated replay ID ${replayId}`);
+        replays.splice(i, 1);
+      }
+      seenReplayIds[replayId] = true;
+    }
   }
 
   filterStoredReplaysAndProcess_(replays) {
